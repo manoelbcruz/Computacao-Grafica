@@ -1,0 +1,15 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('canvas-2d');
+    const ctx = canvas.getContext('2d');
+    let originalObject = [], currentObject = [];
+    const drawAxes = () => { const { width, height } = ctx.canvas; ctx.clearRect(0, 0, width, height); ctx.strokeStyle = '#eee'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(width / 2, 0); ctx.lineTo(width / 2, height); ctx.moveTo(0, height / 2); ctx.lineTo(width, height / 2); ctx.stroke(); };
+    const drawPolygon = (points) => { if (points.length < 2) return; const { width, height } = ctx.canvas; const centerX = width / 2; const centerY = height / 2; ctx.strokeStyle = 'black'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(centerX + points[0].x, centerY - points[0].y); for (let i = 1; i < points.length; i++) { ctx.lineTo(centerX + points[i].x, centerY - points[i].y); } ctx.closePath(); ctx.stroke(); };
+    drawAxes();
+    const redraw = () => { drawAxes(); drawPolygon(currentObject); };
+    document.getElementById('generate-square-btn').addEventListener('click', () => { const size = parseInt(document.getElementById('square-size').value); const half = size / 2; originalObject = [{x:-half, y:-half}, {x:half, y:-half}, {x:half, y:half}, {x:-half, y:half}]; currentObject = JSON.parse(JSON.stringify(originalObject)); redraw(); });
+    const applyTransformation = async (type) => { let params = {}; if (type === 'translate') { params = { tx: parseFloat(document.getElementById('trans-x').value), ty: parseFloat(document.getElementById('trans-y').value) }; } else if (type === 'scale') { const pivot = currentObject[0] || {x:0, y:0}; params = { sx: parseFloat(document.getElementById('scale-x').value), sy: parseFloat(document.getElementById('scale-y').value), cx: pivot.x, cy: pivot.y }; } else if (type === 'rotate') { const sumX = currentObject.reduce((s, p) => s + p.x, 0); const sumY = currentObject.reduce((s, p) => s + p.y, 0); const center = { x: sumX / currentObject.length, y: sumY / currentObject.length }; params = { angle: parseFloat(document.getElementById('rot-angle').value), cx: center.x, cy: center.y }; } const response = await fetch('/api/twod/transform', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ type: type, points: currentObject, params: params }) }); currentObject = await response.json(); redraw(); };
+    document.getElementById('apply-translation-btn').addEventListener('click', () => applyTransformation('translate'));
+    document.getElementById('apply-scale-btn').addEventListener('click', () => applyTransformation('scale'));
+    document.getElementById('apply-rotation-btn').addEventListener('click', () => applyTransformation('rotate'));
+    document.getElementById('reset-object-btn').addEventListener('click', () => { currentObject = JSON.parse(JSON.stringify(originalObject)); redraw(); });
+});

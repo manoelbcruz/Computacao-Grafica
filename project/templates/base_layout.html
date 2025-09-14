@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Projeto CG{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main_style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Projeto 1</h3>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('mod_1_main.index') }}">1-Tela Principal</a></li>
+                    <li><a href="{{ url_for('mod_2_coordenadas.sc_page') }}">2-Sistemas De Coordenadas</a></li>
+                    <li><a href="{{ url_for('mod_3_retas.retas_page') }}">3-Retas</a></li>
+                    <li><a href="{{ url_for('mod_4_circunferencia.circ_page') }}">4-Circunferências</a></li>
+                    <li><a href="{{ url_for('mod_5_twod.twod_page') }}">5-2D</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
