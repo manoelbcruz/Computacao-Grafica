@@ -77,3 +77,13 @@ def create_rotation_matrix(angle_degrees, cx, cy):
     r = [[cos_a, -sin_a, 0], [sin_a, cos_a, 0], [0, 0, 1]]
     t2 = create_translation_matrix(cx, cy)
     return multiply_matrices(t2, multiply_matrices(r, t1))
+
+def create_reflection_matrix(reflect_x, reflect_y):
+    """Cria uma matriz de reflexão. reflect_x reflete em torno do eixo Y, reflect_y em torno do eixo X."""
+    sx = -1 if reflect_x else 1
+    sy = -1 if reflect_y else 1
+    return [[sx, 0, 0], [0, sy, 0], [0, 0, 1]]
+
+def create_shear_matrix(shx, shy):
+    """Cria uma matriz de cisalhamento."""
+    return [[1, shx, 0], [shy, 1, 0], [0, 0, 1]]
