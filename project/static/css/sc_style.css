@@ -1,11 +1,81 @@
-.sc-container { display: flex; width: 100%; height: 100%; align-items: stretch; }
-.sidebar-sc { width: 220px; padding: 10px; background: #f0f0f0; border-left: 1px solid #ccc; border-right: 1px solid #ccc; position: relative; display: flex; flex-direction: column; }
-.main-sc { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ddd; position: relative; }
-#bounds-info { padding: 5px 10px; font-size: 14px; text-align: center; margin-bottom: 10px; }
-#live-coords, #clicked-coords { font-size: 13px; padding: 5px; word-break: break-all; }
-.sidebar-sc h3 { font-size: 15px; text-align: center; margin-top: 5px; }
-.sidebar-sc label { font-size: 13px; margin-right: 5px; font-weight: bold; display: inline-block; width: 45px; }
-.sidebar-sc input { width: 120px; padding: 5px; font-size: 13px; box-sizing: border-box; margin-bottom: 5px; }
-#input-div-left, #input-div-right { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; display: flex; flex-direction: column; align-items: center; }
-.sidebar-sc button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; font-size: 14px; margin-top: 10px; width: 90%; border-radius: 15px; }
-.sidebar-sc button:hover { background-color: #45a049; }
+.sc-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+}
+.sidebar-sc {
+  width: 220px;
+  padding: 10px;
+  background: #f0f0f0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.main-sc {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ddd;
+  position: relative;
+}
+#bounds-info {
+  padding: 5px 10px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+#live-coords,
+#clicked-coords {
+  font-size: 13px;
+  padding: 5px;
+  word-break: break-all;
+}
+.sidebar-sc h3 {
+  font-size: 15px;
+  text-align: center;
+  margin-top: 5px;
+}
+.sidebar-sc label {
+  font-size: 13px;
+  margin-right: 5px;
+  font-weight: bold;
+  display: inline-block;
+  width: 45px;
+}
+.sidebar-sc input {
+  width: 120px;
+  padding: 5px;
+  font-size: 13px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+#input-div-left,
+#input-div-right {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sidebar-sc button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 90%;
+  border-radius: 15px;
+}
+.sidebar-sc button:hover {
+  background-color: #45a049;
+}

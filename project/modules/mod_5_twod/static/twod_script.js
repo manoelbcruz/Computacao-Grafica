@@ -29,23 +29,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyLog = document.getElementById('history-log');
 
     // --- ESTADO DA APLICAÇÃO ---
-    let originalObject = [], currentObject = [], transformHistory = [];
+    let originalObject = [],
+        currentObject = [],
+        transformHistory = [];
 
     // --- FUNÇÕES DE DESENHO E ATUALIZAÇÃO ---
     const drawAxes = () => {
-        const { width, height } = ctx.canvas;
+        const {
+            width,
+            height
+        } = ctx.canvas;
         ctx.clearRect(0, 0, width, height);
         ctx.strokeStyle = '#ccc';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(width / 2, 0); ctx.lineTo(width / 2, height);
-        ctx.moveTo(0, height / 2); ctx.lineTo(width, height / 2);
+        ctx.moveTo(width / 2, 0);
+        ctx.lineTo(width / 2, height);
+        ctx.moveTo(0, height / 2);
+        ctx.lineTo(width, height / 2);
         ctx.stroke();
     };
 
     const drawPolygon = (points) => {
         if (points.length < 2) return;
-        const { width, height } = ctx.canvas;
+        const {
+            width,
+            height
+        } = ctx.canvas;
         const centerX = width / 2;
         const centerY = height / 2;
 
@@ -56,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i < points.length; i++) {
             ctx.lineTo(centerX + points[i].x, centerY - points[i].y);
         }
-        ctx.closePath(); 
+        ctx.closePath();
         ctx.stroke();
     };
 
@@ -94,12 +104,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const startX = parseInt(startXInput.value);
         const startY = parseInt(startYInput.value);
 
-        
-        originalObject = [
-            { x: startX, y: startY },                  // Vértice 1: inferior esquerdo
-            { x: startX + size, y: startY },           // Vértice 2: inferior direito
-            { x: startX + size, y: startY + size },    // Vértice 3: superior direito
-            { x: startX, y: startY + size }            // Vértice 4: superior esquerdo
+
+        originalObject = [{
+                x: startX,
+                y: startY
+            }, // Vértice 1: inferior esquerdo
+            {
+                x: startX + size,
+                y: startY
+            }, // Vértice 2: inferior direito
+            {
+                x: startX + size,
+                y: startY + size
+            }, // Vértice 3: superior direito
+            {
+                x: startX,
+                y: startY + size
+            } // Vértice 4: superior esquerdo
         ];
 
         currentObject = JSON.parse(JSON.stringify(originalObject));
@@ -114,8 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const response = await fetch('/api/twod/transform', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ type: type, points: currentObject, params: params })
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                type: type,
+                points: currentObject,
+                params: params
+            })
         });
         currentObject = await response.json();
         transformHistory.push(historyMsg);
@@ -123,33 +150,60 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     applyTransBtn.addEventListener('click', () => {
-        const tx = parseFloat(transXInput.value), ty = parseFloat(transYInput.value);
-        applyTransformation('translate', { tx, ty }, `Translação(${tx}, ${ty})`);
+        const tx = parseFloat(transXInput.value),
+            ty = parseFloat(transYInput.value);
+        applyTransformation('translate', {
+            tx,
+            ty
+        }, `Translação(${tx}, ${ty})`);
     });
 
     applyScaleBtn.addEventListener('click', () => {
-        const sx = parseFloat(scaleXInput.value), sy = parseFloat(scaleYInput.value);
-        const pivot = currentObject[0] || {x:0, y:0};
-        applyTransformation('scale', { sx, sy, cx: pivot.x, cy: pivot.y }, `Escala(${sx}, ${sy})`);
+        const sx = parseFloat(scaleXInput.value),
+            sy = parseFloat(scaleYInput.value);
+        const pivot = currentObject[0] || {
+            x: 0,
+            y: 0
+        };
+        applyTransformation('scale', {
+            sx,
+            sy,
+            cx: pivot.x,
+            cy: pivot.y
+        }, `Escala(${sx}, ${sy})`);
     });
 
     applyRotBtn.addEventListener('click', () => {
         const angle = parseFloat(rotAngleInput.value);
         const sumX = currentObject.reduce((s, p) => s + p.x, 0);
         const sumY = currentObject.reduce((s, p) => s + p.y, 0);
-        const center = { x: sumX / currentObject.length, y: sumY / currentObject.length };
-        applyTransformation('rotate', { angle, cx: center.x, cy: center.y }, `Rotação(${angle}°)`);
+        const center = {
+            x: sumX / currentObject.length,
+            y: sumY / currentObject.length
+        };
+        applyTransformation('rotate', {
+            angle,
+            cx: center.x,
+            cy: center.y
+        }, `Rotação(${angle}°)`);
     });
 
     applyReflectBtn.addEventListener('click', () => {
         const reflect_x = reflectYCheck.checked;
         const reflect_y = reflectXCheck.checked;
-        applyTransformation('reflection', { reflect_x, reflect_y }, `Reflexão(emX:${reflect_x}, emY:${reflect_y})`);
+        applyTransformation('reflection', {
+            reflect_x,
+            reflect_y
+        }, `Reflexão(emX:${reflect_x}, emY:${reflect_y})`);
     });
 
     applyShearBtn.addEventListener('click', () => {
-        const shx = parseFloat(shearXInput.value), shy = parseFloat(shearYInput.value);
-        applyTransformation('shear', { shx, shy }, `Cisalhamento(${shx}, ${shy})`);
+        const shx = parseFloat(shearXInput.value),
+            shy = parseFloat(shearYInput.value);
+        applyTransformation('shear', {
+            shx,
+            shy
+        }, `Cisalhamento(${shx}, ${shy})`);
     });
 
     clearBtn.addEventListener('click', () => {
