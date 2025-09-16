@@ -7,6 +7,18 @@ def circ_page():
 @circ_bp.route('/api/circ/draw_circle', methods=['POST'])
 def api_draw_circle():
     data = request.json
-    p = [int(data['xc']), int(data['yc']), int(data['r'])]
-    points = lg.bresenham_circle(*p)
+    xc, yc, r = int(data['xc']), int(data['yc']), int(data['r'])
+    algo = data['algo']
+
+    # Lógica para escolher qual função de cálculo usar
+    if algo == 'Bresenham':
+        points = lg.bresenham_circle(xc, yc, r)
+    elif algo == 'Explicit':
+        points = lg.explicit_circle(xc, yc, r)
+    elif algo == 'Parametric':
+        points = lg.parametric_circle(xc, yc, r)
+    else:
+        # Padrão para Bresenham se o algoritmo for desconhecido
+        points = lg.bresenham_circle(xc, yc, r)
+        
     return jsonify(points)
