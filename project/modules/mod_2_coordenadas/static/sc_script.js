@@ -35,6 +35,7 @@ function setPixel(x, y) {
     ctx.fillStyle = "black";
     ctx.fillRect(x, canvas.height - y, 1, 1);
 }
+
 canvas.addEventListener("mousemove", (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = Math.round(event.clientX - rect.left);
@@ -43,6 +44,7 @@ canvas.addEventListener("mousemove", (event) => {
     const world = ndcToWd(ndc.ndcx, ndc.ndcy);
     liveCoords.innerHTML = `<strong>Mundo:</strong><br>(${world.worldX.toFixed(3)}, ${world.worldY.toFixed(3)})<br><strong>Dispositivo:</strong><br>(${x}, ${y})`;
 });
+
 canvas.addEventListener("click", (event) => {
     const rect = canvas.getBoundingClientRect();
     const x = Math.round(event.clientX - rect.left);
@@ -52,6 +54,7 @@ canvas.addEventListener("click", (event) => {
     const world = ndcToWd(ndc.ndcx, ndc.ndcy);
     clickedCoords.innerHTML = `<strong>Mundo:</strong><br>(${world.worldX.toFixed(3)}, ${world.worldY.toFixed(3)})<br><strong>Dispositivo:</strong><br>(${x}, ${y})`;
 });
+
 document.getElementById("set-world-btn").addEventListener("click", () => {
     const inputX = parseFloat(document.getElementById("input-x").value);
     const inputY = parseFloat(document.getElementById("input-y").value);
