@@ -109,14 +109,13 @@ def parametric_circle(xc, yc, r):
     Usa seno e cosseno. Preciso, mas computacionalmente mais custoso.
     """
     points_dict = {}
-    step = 1 / float(r) if r > 0 else 0.1
-    angle = 0
-    while angle <= 360:
-        rad = math.radians(angle)
-        x = round(xc + r * math.cos(rad))
-        y = round(yc + r * math.sin(rad))
+    step =  0.1
+    theta = 0
+    while theta < 2* math.pi:
+        x = round(xc + r * math.cos(theta))
+        y = round(yc + r * math.sin(theta))
         points_dict[f"{x},{y}"] = {'x': x, 'y': y}
-        angle += step
+        theta += step
     return list(points_dict.values())
 
 # ===================================================================
